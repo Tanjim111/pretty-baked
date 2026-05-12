@@ -1,0 +1,28 @@
+{
+  "overview": "Pretty Baked is a professional Bangladeshi online bakery shop with a vivid fruit-orange theme. It features a full storefront with 20+ products, customer accounts, Stripe & COD checkout, loyalty points, coupon/discount codes, wishlist, admin panel for full product/order management, analytics, and a promotional announcement bar.",
+  "features": [
+    "Coupon & discount code system at checkout",
+    "Loyalty points (earn 1pt per 100tk, redeem 1pt=1tk, 10pt signup bonus)",
+    "Wishlist to save products for later",
+    "Multi-image product gallery (4 images per product with slideshow)",
+    "Animated product cards with hover effects",
+    "Instagram-style photo gallery section",
+    "Promotional announcement bar (admin editable, offers & delivery hours)",
+    "WhatsApp contact button",
+    "Admin: coupon code management (1-time, multi-use, limited-time)",
+    "Admin: sales reports with day/week/month charts",
+    "Admin: low stock alerts",
+    "Admin: 4-image upload per product"
+  ],
+  "category": "e-commerce",
+  "tags": [
+    "bakery",
+    "e-commerce",
+    "food",
+    "bangladesh",
+    "loyalty-points",
+    "coupons",
+    "wishlist"
+  ],
+  "last_updated": "2026-04-24T15:04:13.486Z"
+}

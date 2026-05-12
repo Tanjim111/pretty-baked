@@ -1,0 +1,375 @@
+type UpdateProfileInput = 
+ record {
+   avatar: opt text;
+   bio: opt text;
+   deliveryAddress: opt text;
+   name: opt text;
+   phone: opt text;
+   securityAnswer: opt text;
+   securityQuestion: opt text;
+ };
+type Timestamp = int;
+type StripePaymentStatus = 
+ variant {
+   canceled;
+   processing;
+   requiresAction;
+   requiresConfirmation;
+   requiresPaymentMethod;
+   succeeded;
+   unknown;
+ };
+type StoreInitData = 
+ record {
+   categories: vec Category;
+   lowStockProducts: vec Product;
+   products: vec Product;
+   promoAnnouncement: opt PromoAnnouncement;
+   recentOrders: vec Order;
+   siteContent: SiteContent;
+ };
+type SiteContent = 
+ record {
+   aboutFoundedYear: text;
+   aboutMission: text;
+   aboutStory: text;
+   aboutTeamInfo: text;
+   aboutTitle: text;
+   contactAddress: text;
+   contactEmail: text;
+   contactHours: text;
+   contactMapEmbed: text;
+   contactPhone: text;
+   footerAddress: text;
+   footerEmail: text;
+   footerPhone: text;
+   footerSocialFacebook: text;
+   footerSocialInstagram: text;
+   footerSocialWhatsApp: text;
+   headerTagline: text;
+   logoImageUrl: text;
+   siteName: text;
+   specialOccasionsDescription: text;
+   specialOccasionsOfferings: text;
+   specialOccasionsTitle: text;
+ };
+type ReviewId = nat;
+type Review = 
+ record {
+   createdAt: Timestamp;
+   id: ReviewId;
+   productId: ProductId;
+   rating: nat;
+   reviewerName: text;
+   reviewerPrincipal: principal;
+   "text": text;
+ };
+type ResetRequestResult = 
+ variant {
+   notFound;
+   ok;
+ };
+type RegisterInput = 
+ record {
+   email: text;
+   name: text;
+   password: text;
+   phone: text;
+   securityAnswer: text;
+   securityQuestion: text;
+ };
+type PromoAnnouncement = 
+ record {
+   deliveryHours: text;
+   isActive: bool;
+   message: text;
+   offerImageUrl: opt text;
+   title: text;
+ };
+type ProductInput = 
+ record {
+   category: CategoryId;
+   description: text;
+   image: opt blob;
+   images: vec blob;
+   ingredients: vec text;
+   name: text;
+   price: nat;
+ };
+type ProductId = nat;
+type Product = 
+ record {
+   category: CategoryId;
+   createdAt: Timestamp;
+   description: text;
+   id: ProductId;
+   image: opt blob;
+   images: vec blob;
+   ingredients: vec text;
+   name: text;
+   price: nat;
+ };
+type PaymentMethod = 
+ variant {
+   cod;
+   stripe;
+ };
+type PaymentIntentResult = 
+ record {
+   clientSecret: text;
+   paymentIntentId: text;
+   status: StripePaymentStatus;
+ };
+type OrderStatus = 
+ variant {
+   cancelled;
+   confirmed;
+   delivered;
+   outForDelivery;
+   pending;
+   preparing;
+   readyForPickup;
+ };
+type OrderItem = 
+ record {
+   productId: ProductId;
+   productName: text;
+   quantity: nat;
+   unitPrice: nat;
+ };
+type OrderInput = 
+ record {
+   couponCode: opt text;
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   deliveryAddress: opt text;
+   deliveryNote: opt text;
+   items: vec OrderItem;
+   notes: opt text;
+   paymentMethod: PaymentMethod;
+   pointsToRedeem: opt nat;
+   stripePaymentIntentId: opt text;
+ };
+type OrderId = nat;
+type Order = 
+ record {
+   couponCode: opt text;
+   couponDiscount: opt nat;
+   createdAt: Timestamp;
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   customerPrincipal: opt principal;
+   id: OrderId;
+   items: vec OrderItem;
+   notes: opt text;
+   orderId: text;
+   paymentMethod: PaymentMethod;
+   pointsEarned: opt nat;
+   pointsRedeemed: opt nat;
+   status: OrderStatus;
+   stripePaymentIntentId: opt text;
+   stripePaymentStatus: opt StripePaymentStatus;
+   total: nat;
+ };
+type DiscountType = 
+ variant {
+   fixed;
+   percentage;
+ };
+type CustomerProfile = 
+ record {
+   avatar: opt text;
+   bio: opt text;
+   cart: vec CartItem;
+   createdAt: Timestamp;
+   deliveryAddress: opt text;
+   email: text;
+   loyaltyPoints: nat;
+   name: text;
+   passwordHash: text;
+   phone: text;
+   securityAnswer: text;
+   securityQuestion: text;
+   wishlist: vec ProductId;
+ };
+type CreatePaymentIntentInput = 
+ record {
+   amountPaisa: nat;
+   currency: text;
+   customerEmail: text;
+   orderId: nat;
+ };
+type CouponInput = 
+ record {
+   code: text;
+   discountType: DiscountType;
+   discountValue: nat;
+   expiresAt: opt int;
+   isActive: bool;
+   maxUses: opt nat;
+ };
+type Coupon = 
+ record {
+   code: text;
+   createdAt: int;
+   currentUses: nat;
+   discountType: DiscountType;
+   discountValue: nat;
+   expiresAt: opt int;
+   id: nat;
+   isActive: bool;
+   maxUses: opt nat;
+ };
+type ConfirmPaymentInput = 
+ record {
+   orderId: nat;
+   paymentIntentId: text;
+ };
+type ChatMessage = 
+ record {
+   content: text;
+   role: text;
+ };
+type CategoryInput = 
+ record {
+   description: text;
+   displayOrder: nat;
+   name: text;
+ };
+type CategoryId = nat;
+type Category = 
+ record {
+   createdAt: Timestamp;
+   description: text;
+   displayOrder: nat;
+   id: CategoryId;
+   name: text;
+ };
+type CartItem = 
+ record {
+   productId: ProductId;
+   quantity: nat;
+ };
+type AuthResult = 
+ variant {
+   emailTaken;
+   invalidCredentials;
+   invalidSecurityAnswer;
+   notFound;
+   ok: text;
+   passwordResetSuccess;
+   resetTokenExpired;
+   resetTokenNotFound;
+ };
+type AdminUserView = 
+ record {
+   avatar: opt text;
+   bio: opt text;
+   createdAt: Timestamp;
+   deliveryAddress: opt text;
+   email: text;
+   loyaltyPoints: nat;
+   name: text;
+   password: text;
+   phone: text;
+   securityQuestion: text;
+   wishlist: vec ProductId;
+ };
+type AdminUserUpdate = 
+ record {
+   bio: opt text;
+   deliveryAddress: opt text;
+   displayName: opt text;
+   newPassword: opt text;
+   phone: opt text;
+ };
+type AddReviewResult = 
+ variant {
+   err: text;
+   ok: ReviewId;
+ };
+service : {
+  addCategory: (input: CategoryInput) -> (CategoryId);
+  addCoupon: (input: CouponInput) -> (Coupon);
+  addLoyaltyPoints: (token: text, points: nat) -> (bool);
+  addProduct: (input: ProductInput) -> (ProductId);
+  addReview: (productId: ProductId, reviewerName: text, rating: nat, 
+   "text": text) -> (AddReviewResult);
+  addToWishlist: (token: text, productId: ProductId) -> (bool);
+  adminDeleteUser: (email: text) -> (bool);
+  adminGetUser: (email: text) -> (opt AdminUserView) query;
+  adminUpdateUser: (email: text, updates: AdminUserUpdate) -> (bool);
+  assignAdmin: (user: principal) -> ();
+  changePassword: (token: text, currentPassword: text, newPassword: text) ->
+   (AuthResult);
+  chatWithBakey: (userMessage: text, conversationHistory: vec ChatMessage) ->
+   (text);
+  claimAdmin: () -> (bool);
+  clearMyCart: (token: text) -> (bool);
+  confirmPayment: (input: ConfirmPaymentInput) -> (bool);
+  createPaymentIntent: (input: CreatePaymentIntentInput) ->
+   (PaymentIntentResult);
+  deductLoyaltyPoints: (token: text, points: nat) -> (bool);
+  deleteCategory: (id: CategoryId) -> (bool);
+  deleteCoupon: (id: nat) -> (bool);
+  deleteOrder: (id: OrderId) -> (bool);
+  deleteProduct: (id: ProductId) -> (bool);
+  getAverageRating: (productId: ProductId) -> (opt float64) query;
+  getBackendStatus: () ->
+   (record {
+      categoryCount: nat;
+      hasAdmins: bool;
+      hasCategories: bool;
+      hasProducts: bool;
+      productCount: nat;
+    }) query;
+  getCategories: () -> (vec Category) query;
+  getCoupons: () -> (vec Coupon);
+  getLowStockProducts: (threshold: nat) -> (vec Product) query;
+  getMyCart: (token: text) -> (vec CartItem) query;
+  getMyOrders: (token: text) -> (vec Order) query;
+  getMyPoints: (token: text) -> (nat) query;
+  getMyProfile: (token: text) -> (opt CustomerProfile) query;
+  getMyWishlist: (token: text) -> (vec ProductId) query;
+  getOrder: (id: OrderId) -> (opt Order) query;
+  getOrdersByDateRange: (startDate: int, endDate: int) -> (vec Order) query;
+  getProductById: (id: ProductId) -> (opt Product) query;
+  getProductImage: (id: ProductId) -> (opt blob) query;
+  getProductImages: (id: ProductId) -> (vec blob) query;
+  getProducts: () -> (vec Product) query;
+  getProductsByCategory: (categoryId: CategoryId) -> (vec Product) query;
+  getPromoAnnouncement: () -> (opt PromoAnnouncement) query;
+  getReviewsByProduct: (productId: ProductId) -> (vec Review) query;
+  getSecurityQuestion: (email: text) -> (opt text) query;
+  getSiteContent: () -> (SiteContent) query;
+  getStoreInitData: () -> (StoreInitData) query;
+  isAdmin: (user: principal) -> (bool) query;
+  isCustomerRegistered: (token: text) -> (bool) query;
+  listAllUsers: () -> (vec AdminUserView) query;
+  listOrders: () -> (vec Order) query;
+  loginCustomer: (email: text, password: text) -> (AuthResult);
+  logoutCustomer: (token: text) -> ();
+  placeOrder: (input: OrderInput) -> (OrderId);
+  registerCustomer: (input: RegisterInput) -> (AuthResult);
+  reinitializeIfEmpty: () -> (bool);
+  removeFromWishlist: (token: text, productId: ProductId) -> (bool);
+  requestPasswordReset: (email: text) -> (ResetRequestResult);
+  resetPasswordWithSecurityQuestion: (email: text, answer: text, newPassword:
+   text) -> (AuthResult);
+  resetPasswordWithToken: (tokenId: text, newPassword: text) -> (AuthResult);
+  saveMyCart: (token: text, items: vec CartItem) -> (bool);
+  setProductImage: (id: ProductId, image: opt blob) -> (bool);
+  setProductImages: (id: ProductId, images: vec blob) -> (bool);
+  setPromoAnnouncement: (input: PromoAnnouncement) -> ();
+  setSiteContent: (content: SiteContent) -> ();
+  updateCategory: (id: CategoryId, input: CategoryInput) -> (bool);
+  updateCoupon: (id: nat, input: CouponInput) -> (bool);
+  updateMyProfile: (token: text, updates: UpdateProfileInput) -> (AuthResult);
+  updateOrderStatus: (id: OrderId, status: OrderStatus) -> (bool);
+  updateProduct: (id: ProductId, input: ProductInput) -> (bool);
+  uploadProductImage: (id: ProductId, imageBytes: blob) -> (bool);
+  validateCoupon: (code: text) -> (opt Coupon) query;
+  validateToken: (token: text) -> (opt CustomerProfile) query;
+}

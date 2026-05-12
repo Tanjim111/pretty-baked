@@ -1,0 +1,262 @@
+// Version: 1.0.0
+type CartItem__999491045 = {productId : ProductId__160010635; quantity : Nat};
+type CategoryId__14729845 = Nat;
+type Category__403107212 =
+  {
+    createdAt : Timestamp__301639476;
+    description : Text;
+    displayOrder : Nat;
+    id : CategoryId__14729845;
+    name : Text
+  };
+type Coupon__687933075 =
+  {
+    code : Text;
+    createdAt : Int;
+    currentUses : Nat;
+    discountType : DiscountType__708504574;
+    discountValue : Nat;
+    expiresAt : ?Int;
+    id : Nat;
+    isActive : Bool;
+    maxUses : ?Nat
+  };
+type CustomerProfile__618613503 =
+  {
+    avatar : ?Text;
+    bio : ?Text;
+    cart : [CartItem__999491045];
+    createdAt : Timestamp__301639476;
+    deliveryAddress : ?Text;
+    email : Text;
+    loyaltyPoints : Nat;
+    name : Text;
+    passwordHash : Text;
+    phone : Text;
+    securityAnswer : Text;
+    securityQuestion : Text;
+    wishlist : [ProductId__160010635]
+  };
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DiscountType__708504574 = {#fixed; #percentage};
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type OrderId__197865225 = Nat;
+type OrderItem__241319351 =
+  {
+    productId : ProductId__160010635;
+    productName : Text;
+    quantity : Nat;
+    unitPrice : Nat
+  };
+type OrderStatus__393009242 =
+  {
+    #cancelled;
+    #confirmed;
+    #delivered;
+    #outForDelivery;
+    #pending;
+    #preparing;
+    #readyForPickup
+  };
+type Order__141779993 =
+  {
+    couponCode : ?Text;
+    couponDiscount : ?Nat;
+    createdAt : Timestamp__301639476;
+    customerEmail : Text;
+    customerName : Text;
+    customerPhone : Text;
+    customerPrincipal : ?Principal;
+    id : OrderId__197865225;
+    items : [OrderItem__241319351];
+    notes : ?Text;
+    orderId : Text;
+    paymentMethod : PaymentMethod__736241749;
+    pointsEarned : ?Nat;
+    pointsRedeemed : ?Nat;
+    status : OrderStatus__393009242;
+    stripePaymentIntentId : ?Text;
+    stripePaymentStatus : ?StripePaymentStatus__965343192;
+    total : Nat
+  };
+type PaymentMethod__736241749 = {#cod; #stripe};
+type ProductId__160010635 = Nat;
+type ProductInternal__286717409 =
+  {
+    category : CategoryId__14729845;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : ProductId__160010635;
+    image : ?Blob;
+    images : [Blob];
+    ingredients : [Text];
+    name : Text;
+    price : Nat
+  };
+type PromoAnnouncement__869256186 =
+  {
+    deliveryHours : Text;
+    isActive : Bool;
+    message : Text;
+    offerImageUrl : ?Text;
+    title : Text
+  };
+type ResetToken__417079649 = {email : Text; expiresAt : Int};
+type ReviewId__1068003314 = Nat;
+type Review__1059295586 =
+  {
+    createdAt : Timestamp__301639476;
+    id : ReviewId__1068003314;
+    productId : ProductId__160010635;
+    rating : Nat;
+    reviewerName : Text;
+    reviewerPrincipal : Principal;
+    text : Text
+  };
+type SiteContent__956697434 =
+  {
+    aboutFoundedYear : Text;
+    aboutMission : Text;
+    aboutStory : Text;
+    aboutTeamInfo : Text;
+    aboutTitle : Text;
+    contactAddress : Text;
+    contactEmail : Text;
+    contactHours : Text;
+    contactMapEmbed : Text;
+    contactPhone : Text;
+    footerAddress : Text;
+    footerEmail : Text;
+    footerPhone : Text;
+    footerSocialFacebook : Text;
+    footerSocialInstagram : Text;
+    footerSocialWhatsApp : Text;
+    headerTagline : Text;
+    logoImageUrl : Text;
+    siteName : Text;
+    specialOccasionsDescription : Text;
+    specialOccasionsOfferings : Text;
+    specialOccasionsTitle : Text
+  };
+type StripePaymentStatus__965343192 =
+  {
+    #canceled;
+    #processing;
+    #requiresAction;
+    #requiresConfirmation;
+    #requiresPaymentMethod;
+    #succeeded;
+    #unknown
+  };
+type Timestamp__301639476 = Int;
+actor {
+  stable STRIPE_API_URL : Text;
+  stable STRIPE_SECRET_KEY : Text;
+  stable TOGETHER_API_KEY : Text;
+  stable TOGETHER_API_URL : Text;
+  stable admins :
+    {var root : Node__92254746<Principal>; var size : Nat__490723111};
+  stable categories :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Category__403107212]];
+      var elementIndex : Nat__490723111
+    };
+  stable coupons :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Coupon__687933075]];
+      var elementIndex : Nat__490723111
+    };
+  stable customerProfiles :
+    {
+      var root : Node__46230540<Text, CustomerProfile__618613503>;
+      var size : Nat__490723111
+    };
+  stable customerSessions :
+    {var root : Node__46230540<Text, Text>; var size : Nat__490723111};
+  stable customerTokenCounter : {var value : Nat};
+  stable ic :
+    actor {
+      http_request :
+        shared {
+                 body : ?Blob;
+                 headers : [{name : Text; value : Text}];
+                 is_replicated : ?Bool;
+                 max_response_bytes : ?Nat64;
+                 method : {#get; #head; #post};
+                 transform :
+                   ?{
+                      context : Blob;
+                      function :
+                        shared query {
+                                       context : Blob;
+                                       response :
+                                         {
+                                           body : Blob;
+                                           headers :
+                                             [{name : Text; value : Text}];
+                                           status : Nat
+                                         }
+                                     } ->
+                          async
+                            {
+                              body : Blob;
+                              headers : [{name : Text; value : Text}];
+                              status : Nat
+                            }
+                    };
+                 url : Text
+               } ->
+          async
+            {
+              body : Blob;
+              headers : [{name : Text; value : Text}];
+              status : Nat
+            }
+    };
+  stable nextCategoryId : {var value : Nat};
+  stable nextCouponId : {var value : Nat};
+  stable nextOrderId : {var value : Nat};
+  stable nextProductId : {var value : Nat};
+  stable nextReviewId : {var value : Nat};
+  stable orders :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Order__141779993]];
+      var elementIndex : Nat__490723111
+    };
+  stable products :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ProductInternal__286717409]];
+      var elementIndex : Nat__490723111
+    };
+  stable promoState : {var announcement : ?PromoAnnouncement__869256186};
+  stable resetTokens :
+    {
+      var root : Node__46230540<Text, ResetToken__417079649>;
+      var size : Nat__490723111
+    };
+  stable reviews :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Review__1059295586]];
+      var elementIndex : Nat__490723111
+    };
+  stable seeded : {var value : Bool};
+  stable siteContentStore : {var content : SiteContent__956697434}
+};
